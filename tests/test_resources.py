@@ -17,6 +17,7 @@ from python_wait_on.resources.file_resource import FileResource
 from python_wait_on.resources.http_resource import HttpResource
 from python_wait_on.resources.tcp_resource import TcpResource
 from python_wait_on.resources.socket_resource import SocketResource
+from python_wait_on.resources.directory_resource import DirectoryResource
 
 class TestFileResource(unittest.TestCase):
     """Testes para a classe FileResource"""
@@ -229,6 +230,55 @@ class TestHTTPServer(unittest.TestCase):
         """Testa TcpResource com uma porta TCP real"""
         resource = TcpResource('localhost', self.port)
         self.assertTrue(resource.is_available())
+
+class TestDirectoryResource(unittest.TestCase):
+    """Testes para a classe DirectoryResource"""
+    
+    def setUp(self):
+        """Configuração para os testes"""
+        self.temp_dir = mkdtemp()
+        self.sub_dir = os.path.join(self.temp_dir, 'test_dir')
+        os.makedirs(self.sub_dir, exist_ok=True)
+    
+    def tearDown(self):
+        """Limpeza após os testes"""
+        rmtree(self.temp_dir)
+    
+    def test_is_available(self):
+        """Testa o método is_available"""
+        # Diretório existente
+        resource = DirectoryResource(self.sub_dir)
+        self.assertTrue(resource.is_available())
+        
+        # Diretório não existente
+        non_existent_dir = os.path.join(self.temp_dir, 'non_existent_dir')
+        resource = DirectoryResource(non_existent_dir)
+        self.assertFalse(resource.is_available())
+    
+    def test_has_changed(self):
+        """Testa o método has_changed"""
+        resource = DirectoryResource(self.sub_dir)
+        
+        # Primeira verificação
+        self.assertTrue(resource.has_changed())
+        
+        # Segunda verificação sem alterações
+        self.assertFalse(resource.has_changed())
+        
+        # Modificar o diretório criando um arquivo dentro dele
+        time.sleep(0.1)  # Pequeno atraso para garantir timestamp diferente
+        with open(os.path.join(self.sub_dir, 'test_file.txt'), 'w') as f:
+            f.write('test content')
+        
+        # Verificar novamente
+        self.assertTrue(resource.has_changed())
+        
+        # Remover o diretório
+        rmtree(self.sub_dir)
+        self.assertTrue(resource.has_changed())
+        
+        # Verificar novamente após remoção
+        self.assertFalse(resource.has_changed())
 
 if __name__ == '__main__':
     unittest.main()
