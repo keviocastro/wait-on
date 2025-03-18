@@ -10,12 +10,39 @@ Uma biblioteca Python para aguardar por recursos como arquivos, diretórios, por
 pip install python-wait-on
 ```
 
+### Usando ambiente virtual (recomendado)
+
+É recomendado usar um ambiente virtual para isolar as dependências do projeto:
+
+```bash
+# Criar e ativar ambiente virtual
+python -m venv venv
+
+# No Linux/macOS
+source venv/bin/activate
+
+# No Windows
+venv\Scripts\activate
+
+# Instalar o pacote
+pip install python-wait-on
+```
+
 ### Instalação para desenvolvimento
 
 ```bash
 # Clone o repositório
 git clone https://github.com/keviocastro/wait-on.git
 cd wait-on
+
+# Criar e ativar ambiente virtual
+python -m venv venv
+
+# No Linux/macOS
+source venv/bin/activate
+
+# No Windows
+venv\Scripts\activate
 
 # Instale em modo de desenvolvimento
 pip install -e ".[dev]"
