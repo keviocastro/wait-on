@@ -1,13 +1,13 @@
-# Contribuindo para o Python Wait-On
+# Contribuindo para o Wait-On
 
-Obrigado pelo seu interesse em contribuir para o Python Wait-On! Este documento fornece diretrizes para contribuir com o projeto.
+Obrigado pelo seu interesse em contribuir para o Wait-On! Este documento fornece diretrizes para contribuir com o projeto.
 
 ## Configuração do Ambiente de Desenvolvimento
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/yourusername/python-wait-on.git
-   cd python-wait-on
+   git clone https://github.com/yourusername/wait-on.git
+   cd wait-on
    ```
 
 2. Crie e ative um ambiente virtual:
