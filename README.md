@@ -1,4 +1,4 @@
-# Python Wait-On
+# Wait-On
 
 Uma biblioteca Python para aguardar por recursos como arquivos, diretórios, portas TCP, sockets e endpoints HTTP(S). Útil para scripts de inicialização, testes e integração contínua.
 
@@ -7,7 +7,7 @@ Uma biblioteca Python para aguardar por recursos como arquivos, diretórios, por
 ### Via pip (usuários)
 
 ```bash
-pip install python-wait-on
+pip install wait-on
 ```
 
 ### Usando ambiente virtual (recomendado)
@@ -25,7 +25,7 @@ source venv/bin/activate
 venv\Scripts\activate
 
 # Instalar o pacote
-pip install python-wait-on
+pip install wait-on
 ```
 
 ### Instalação para desenvolvimento
@@ -56,7 +56,7 @@ python -m unittest discover tests
 ### Como biblioteca Python
 
 ```python
-from python_wait_on.wait_on import wait_on
+from wait_on.wait_on import wait_on
 
 # Aguardar por um arquivo
 result = wait_on(['arquivo.txt'])
@@ -77,13 +77,13 @@ result = wait_on(
 
 ```bash
 # Aguardar por um arquivo
-python-wait-on arquivo.txt
+wait-on arquivo.txt
 
 # Aguardar por múltiplos recursos
-python-wait-on arquivo.txt http://localhost:8000 tcp:localhost:5000
+wait-on arquivo.txt http://localhost:8000 tcp:localhost:5000
 
 # Usar opções personalizadas
-python-wait-on -d 1000 -i 500 -t 30000 -w 1000 -v http://localhost:8000
+wait-on -d 1000 -i 500 -t 30000 -w 1000 -v http://localhost:8000
 ```
 
 ## Tipos de Recursos Suportados
@@ -102,8 +102,8 @@ wait_on(['file:arquivo.txt'])
 
 Linha de comando:
 ```bash
-python-wait-on arquivo.txt
-python-wait-on file:arquivo.txt
+wait-on arquivo.txt
+wait-on file:arquivo.txt
 ```
 
 ### Diretórios
@@ -116,7 +116,7 @@ wait_on(['dir:/caminho/para/diretorio'])
 
 Linha de comando:
 ```bash
-python-wait-on dir:/caminho/para/diretorio
+wait-on dir:/caminho/para/diretorio
 ```
 
 ### HTTP/HTTPS
@@ -135,10 +135,10 @@ wait_on(['https-get://example.com'])
 
 Linha de comando:
 ```bash
-python-wait-on http://localhost:8000
-python-wait-on https://example.com
-python-wait-on http-get://localhost:8000
-python-wait-on https-get://example.com
+wait-on http://localhost:8000
+wait-on https://example.com
+wait-on http-get://localhost:8000
+wait-on https-get://example.com
 ```
 
 ### TCP
@@ -152,8 +152,8 @@ wait_on(['tcp:192.168.1.1:22'])
 
 Linha de comando:
 ```bash
-python-wait-on tcp:localhost:8000
-python-wait-on tcp:192.168.1.1:22
+wait-on tcp:localhost:8000
+wait-on tcp:192.168.1.1:22
 ```
 
 ### Socket Unix
@@ -166,7 +166,7 @@ wait_on(['socket:/tmp/socket.sock'])
 
 Linha de comando:
 ```bash
-python-wait-on socket:/tmp/socket.sock
+wait-on socket:/tmp/socket.sock
 ```
 
 ## Opções Detalhadas
@@ -199,7 +199,7 @@ python-wait-on socket:/tmp/socket.sock
 ### Aguardar por um Arquivo
 
 ```python
-from python_wait_on.wait_on import wait_on
+from wait_on.wait_on import wait_on
 
 # Aguardar até que um arquivo exista
 result = wait_on(['arquivo.txt'])
@@ -212,7 +212,7 @@ else:
 ### Aguardar por um Diretório
 
 ```python
-from python_wait_on.wait_on import wait_on
+from wait_on.wait_on import wait_on
 
 # Aguardar até que um diretório exista
 result = wait_on(['dir:/caminho/para/diretorio'])
@@ -232,7 +232,7 @@ else:
 ### Aguardar por um Servidor HTTP
 
 ```python
-from python_wait_on.wait_on import wait_on
+from wait_on.wait_on import wait_on
 
 # Aguardar até que um servidor HTTP esteja disponível
 result = wait_on(
@@ -249,7 +249,7 @@ else:
 ### Aguardar por uma Porta TCP
 
 ```python
-from python_wait_on.wait_on import wait_on
+from wait_on.wait_on import wait_on
 
 # Aguardar até que uma porta TCP esteja aberta
 result = wait_on(
@@ -266,7 +266,7 @@ else:
 ### Aguardar por Múltiplos Recursos
 
 ```python
-from python_wait_on.wait_on import wait_on
+from wait_on.wait_on import wait_on
 
 # Aguardar até que todos os recursos estejam disponíveis
 result = wait_on([
@@ -285,7 +285,7 @@ else:
 ### Uso da Janela de Estabilidade
 
 ```python
-from python_wait_on.wait_on import wait_on
+from wait_on.wait_on import wait_on
 
 # Aguardar até que o recurso esteja estável por 2 segundos
 result = wait_on(
@@ -300,7 +300,7 @@ result = wait_on(
 ### Aguardar por Serviços em Contêineres Docker
 
 ```python
-from python_wait_on.wait_on import wait_on
+from wait_on.wait_on import wait_on
 import subprocess
 import sys
 
@@ -328,7 +328,7 @@ print("PostgreSQL está pronto!")
 import unittest
 import subprocess
 import threading
-from python_wait_on.wait_on import wait_on
+from wait_on.wait_on import wait_on
 
 class TestServidor(unittest.TestCase):
     @classmethod
@@ -359,25 +359,25 @@ class TestServidor(unittest.TestCase):
 
 ```bash
 # Aguardar por um arquivo
-python-wait-on arquivo.txt
+wait-on arquivo.txt
 
 # Aguardar por um diretório
-python-wait-on dir:/caminho/para/diretorio
+wait-on dir:/caminho/para/diretorio
 
 # Aguardar por múltiplos recursos
-python-wait-on arquivo.txt dir:/caminho/para/diretorio http://localhost:8000 tcp:localhost:5000
+wait-on arquivo.txt dir:/caminho/para/diretorio http://localhost:8000 tcp:localhost:5000
 
 # Usar modo reverso (aguardar até que os recursos NÃO estejam disponíveis)
-python-wait-on -r arquivo.txt
+wait-on -r arquivo.txt
 
 # Definir timeout
-python-wait-on -t 10000 arquivo.txt
+wait-on -t 10000 arquivo.txt
 
 # Modo verboso
-python-wait-on -v http://localhost:8000
+wait-on -v http://localhost:8000
 
 # Combinando opções
-python-wait-on -d 1000 -i 500 -t 30000 -w 2000 -v http://localhost:8000 tcp:localhost:5432
+wait-on -d 1000 -i 500 -t 30000 -w 2000 -v http://localhost:8000 tcp:localhost:5432
 ```
 
 ## Contribuindo
