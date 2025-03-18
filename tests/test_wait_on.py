@@ -13,7 +13,7 @@ from tempfile import NamedTemporaryFile, mkdtemp
 from shutil import rmtree
 from unittest.mock import patch, MagicMock
 
-from python_wait_on.wait_on import wait_on, _check_file, _check_http, _check_tcp, _check_socket
+from python_wait_on.wait_on import wait_on, _check_file, _check_http, _check_tcp, _check_socket, _check_directory
 
 class TestWaitOn(unittest.TestCase):
     """Testes para a função wait_on e funções auxiliares"""
@@ -171,6 +171,31 @@ class TestWaitOn(unittest.TestCase):
         non_existent_file = os.path.join(self.temp_dir, 'non_existent.txt')
         result = wait_on([self.temp_file, non_existent_file], timeout=1000)
         self.assertFalse(result)
+        
+    def test_check_directory(self):
+        """Testa a função _check_directory"""
+        # Diretório existente
+        temp_dir = mkdtemp()
+        self.assertTrue(_check_directory(temp_dir))
+        
+        # Diretório não existente
+        non_existent_dir = os.path.join(self.temp_dir, 'non_existent_dir')
+        self.assertFalse(_check_directory(non_existent_dir))
+        
+        # Limpar
+        rmtree(temp_dir)
+        
+    def test_wait_on_directory(self):
+        """Testa wait_on com diretório"""
+        # Criar diretório temporário
+        temp_dir = mkdtemp()
+        
+        # Diretório existente
+        result = wait_on([f'dir:{temp_dir}'], timeout=1000)
+        self.assertTrue(result)
+        
+        # Limpar
+        rmtree(temp_dir)
 
 class TestHTTPServer(unittest.TestCase):
     """Testes com um servidor HTTP real"""

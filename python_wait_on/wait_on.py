@@ -41,6 +41,7 @@ HTTP_GET_TYPE = 'http-get'
 HTTPS_GET_TYPE = 'https-get'
 TCP_TYPE = 'tcp'
 SOCKET_TYPE = 'socket'
+DIRECTORY_TYPE = 'dir'
 
 def wait_on(
     resources: List[str],
@@ -180,6 +181,9 @@ def _create_resource_checker(resource: str) -> Optional[Tuple[str, Callable[[], 
     elif resource.startswith('socket:'):
         socket_path = resource[7:]
         return (resource, lambda: _check_socket(socket_path))
+    elif resource.startswith('dir:'):
+        dir_path = resource[4:]
+        return (resource, lambda: _check_directory(dir_path))
     elif ':' not in resource or resource.startswith('file:'):
         # Se não tiver prefixo ou começar com file:, assume que é um arquivo
         path = resource[5:] if resource.startswith('file:') else resource
@@ -221,3 +225,7 @@ def _check_socket(socket_path: str) -> bool:
         return True
     except (socket.timeout, socket.error, FileNotFoundError):
         return False
+
+def _check_directory(path: str) -> bool:
+    """Verifica se um diretório existe."""
+    return os.path.isdir(path)
