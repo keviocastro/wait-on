@@ -1,0 +1,2 @@
+[console_scripts]
+python-wait-on = python_wait_on.cli:main
